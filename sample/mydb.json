@@ -1,0 +1,46 @@
+{
+    "name": "mydb",
+    "tables": [
+        {
+            "name": "url",
+            "columns": [
+                {
+                    "name": "id",
+                    "type": "bigint",
+                    "nullable": false,
+                    "autoIncrement": true
+                },
+                {
+                    "name": "url",
+                    "type": "varchar",
+                    "size": 4096
+                },
+                {
+                    "name": "url_hash",
+                    "type": "char",
+                    "size": 40
+                },
+                {
+                    "name": "status",
+                    "type": "tinyint",
+                    "default": "0"
+                },
+                {
+                    "name": "content_type",
+                    "type": "varchar",
+                    "size": 64
+                }
+            ],
+            "indexes": [
+                {
+                    "primaryKey": true,
+                    "columns": [ "id" ]
+                },
+                {
+                    "unique": true,
+                    "columns": [ "url_hash" ]
+                }
+            ]
+        }
+    ]
+}

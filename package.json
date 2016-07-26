@@ -1,0 +1,30 @@
+{
+  "name": "restup",
+  "version": "0.0.1",
+  "description": "Node.js database proxy for for distributed applications",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fangwd/restup.git"
+  },
+  "dependencies": {
+    "mysql": ">2.0.0"
+  },
+  "keywords": [
+    "Database",
+    "REST",
+    "API",
+    "distrubuted",
+    "web",
+    "crawler"
+  ],
+  "author": "Weidong Fang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fangwd/restup/issues"
+  },
+  "homepage": "https://github.com/fangwd/restup#readme"
+}
