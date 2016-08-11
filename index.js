@@ -42,25 +42,38 @@ exports.createServer = function(options) {
     if (req.method == 'GET') {
       db.get(query, finish)
     }
-    else {
+    else if (req.method == 'POST') {
       receive(req, (err, data) => {
         if (err) return finish(err)
-        try {
-          data = JSON.parse(data.toString())
-        }
-        catch(err) {
-          return finish(err)
-        }
-        if (req.method == 'PATCH') {
-          query.update = data
-          db.claim(query, finish)
+        if (query.attached) {
+          let field = Object.keys(query.attached)[0],
+              index = data.indexOf(0)
+          try {
+            let row = index > 0 ? JSON.parse(data.slice(0, index).toString()) : {}
+            row[field] = data.slice(index + 1)
+            query.rows = [row]
+          }
+          catch(err) {
+            return finish(err)
+          }
         }
         else {
-          // req.method == 'POST'
+          try {
+            data = JSON.parse(data.toString())
+          }
+          catch(err) {
+            return finish(err)
+          }
           query.rows = Array.isArray(data) ? data : [data]
-          db.update(query, finish)
+          if (query.rows.length == 0) {
+            return finish(null, [])
+          }
         }
+        db.update(query, finish)
       })
+    }
+    else {
+      finish(`Unsupported method ${req.method}`)
     }
   })
 }

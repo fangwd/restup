@@ -7,28 +7,46 @@
                 {
                     "name": "id",
                     "type": "bigint",
-                    "nullable": false,
                     "autoIncrement": true
                 },
                 {
-                    "name": "url",
-                    "type": "varchar",
-                    "size": 4096
-                },
-                {
-                    "name": "url_hash",
+                    "name": "url_key",
                     "type": "char",
                     "size": 40
                 },
                 {
+                    "name": "site_id",
+                    "type": "int"
+                },
+                {
+                    "name": "path",
+                    "type": "varchar",
+                    "size": 4096
+                },
+                {
                     "name": "status",
-                    "type": "tinyint",
-                    "default": "0"
+                    "type": "tinyint"
+                },
+                {
+                    "name": "http_status",
+                    "type": "int"
                 },
                 {
                     "name": "content_type",
+                    "type": "int"
+                },
+                {
+                    "name": "content_length",
+                    "type": "int"
+                },
+                {
+                    "name": "fetch_time",
+                    "type": "int"
+                },
+                {
+                    "name": "response",
                     "type": "varchar",
-                    "size": 64
+                    "size": 256
                 }
             ],
             "indexes": [
@@ -38,7 +56,47 @@
                 },
                 {
                     "unique": true,
-                    "columns": [ "url_hash" ]
+                    "columns": [ "url_key" ]
+                },
+                {
+                    "columns": [ "site_id" ]
+                }
+            ],
+            "foreignKeys": [
+                {
+                    "columns": [ "site_id" ],
+                    "referencedTable": "site",
+                    "referencedColumns": [ "id" ]
+                }
+            ]
+        },
+        {
+            "name": "site",
+            "columns": [
+                {
+                    "name": "id",
+                    "type": "int",
+                    "autoIncrement": true
+                },
+                {
+                    "name": "url",
+                    "type": "varchar",
+                    "size": 80
+                },
+                {
+                    "name": "max_running",
+                    "type": "int",
+                    "default": 1
+                }
+            ],
+            "indexes": [
+                {
+                    "primaryKey": true,
+                    "columns": [ "id" ]
+                },
+                {
+                    "unique": true,
+                    "columns": [ "url" ]
                 }
             ]
         }

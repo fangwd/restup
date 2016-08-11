@@ -13,8 +13,8 @@ if (!fs.existsSync(dataDir)) {
 
 restup.createServer({
   db: {
-    user : 'root',
-    password : '',
+    user : 'me',
+    password : 'secret',
     database : 'mydb',
     schema : schemaFile,
     fieldHandler : {
@@ -22,15 +22,17 @@ restup.createServer({
         response : (row, callback) => {
           let fileName = `${dataDir}/${row.id}`,
           data = row.response
-          if (typeof data === 'object') {
-            fs.writeFile(fileName, JSON.stringify(data), 'binary', function(err) {
+          if (data instanceof Buffer) {
+            fs.writeFile(fileName, data, 'binary', function(err) {
               row['response'] = fileName
               callback(err)
             })
           }
           else {
             fs.readFile(fileName, 'binary', (err, data) => {
-              row['response'] = JSON.parse(data)
+              if (!err) {
+                row['response'] = data
+              }
               callback(err)
             })
           }

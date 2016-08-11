@@ -9,7 +9,7 @@ Restup currently supports MySQL as the backend database engine. Support for othe
 The following examples are assumed that we have a table "url" which has been created with SQL statement:
 
 ```sql
-CREATE TABLE url2 (
+CREATE TABLE url (
   id bigint(20) NOT NULL AUTO_INCREMENT,
   url varchar(4096) DEFAULT NULL,
   url_hash char(32) DEFAULT NULL,
@@ -57,11 +57,10 @@ GET /url.id,url?id-gt=10&status-lt=2&limit:5&sort:url
 
 A common requirement in distributed applications is the ability to select rows exclusively, i.e. to select one or more rows from a table and update a flag field of the selected row(s) atomically so that they will not be selected again by other processes.
 
-With restup, this is achieved by using `HTTP PATCH` requests. For example, to get 5 URLs with flags equal to 0 and update their flags to 1 for the selected:
+To get 5 URLs with flags equal to 0 and update their flags to 1 for the selected:
 
 ```js
-PATCH /url?status=0&limit:5
-{status: 1}
+GET /url?status=0&update:status=1&limit:5
 ```
 
 ### Creating/updating rows
