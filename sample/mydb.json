@@ -25,18 +25,15 @@
                 },
                 {
                     "name": "status",
-                    "type": "tinyint",
-                    "default": 0
+                    "type": "tinyint"
                 },
                 {
                     "name": "http_status",
-                    "type": "int",
-                    "default": 0
+                    "type": "int"
                 },
                 {
                     "name": "content_type",
-                    "type": "varchar",
-                    "size": 64
+                    "type": "int"
                 },
                 {
                     "name": "content_length",
