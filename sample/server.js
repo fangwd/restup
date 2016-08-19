@@ -30,8 +30,10 @@ restup.createServer({
           }
           else {
             fs.readFile(fileName, 'binary', (err, data) => {
-              row['response'] = err ? null : data
-              callback()
+              if (!err) {
+                row['response'] = data
+              }
+              callback(err)
             })
           }
         }
