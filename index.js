@@ -1,6 +1,7 @@
 'use strict'
 
 const http   = require('http'),
+      https  = require('https'),
       URL    = require('url'),
       mydb   = require('./lib/mydb'),
       Query  = require('./lib/query'),
@@ -11,7 +12,7 @@ exports.createServer = function(options) {
 
   let db = mydb(options.db)
 
-  return http.createServer((req, res) => {
+  function listener(req, res) {
     let url = URL.parse(req.url, true),
         query = Query(url)
 
@@ -75,5 +76,8 @@ exports.createServer = function(options) {
     else {
       finish(`Unsupported method ${req.method}`)
     }
-  })
+  }
+
+  return options.key && options.cert ? https.createServer(options, listener)
+                                     : http.createServer(listener)
 }
