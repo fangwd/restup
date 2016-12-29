@@ -81,3 +81,5 @@ exports.createServer = function(options) {
   return options.key && options.cert ? https.createServer(options, listener)
                                      : http.createServer(listener)
 }
+
+exports.mydb = mydb
